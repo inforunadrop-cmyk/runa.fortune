@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>うちの子の才能の種 診断</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--night:#12102a;--dusk:#241f4d;--mist:#c9b8ff;--moon:#f3edff;--gold:#e8cd8f;--rose:#e2a9cf;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -10%,#3a2f7a 0%,var(--night) 60%) fixed,var(--night);
+color:var(--moon);font-family:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;line-height:1.9;overflow-x:hidden}
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+main{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:36px 22px 60px;text-align:center}
+h1{font-weight:800;font-size:1.7rem;letter-spacing:.12em;margin:.4em 0;color:var(--gold);text-shadow:0 0 24px #e8cd8f66}
+h2{font-weight:600;font-size:1.25rem;line-height:1.7;margin:.6em 0 1.2em}
+p{margin:.8em 0}
+.moon{width:104px;height:104px;margin:14px auto 8px;border-radius:50%;
+background:radial-gradient(circle at 35% 35%,#fffbe9,#e8cd8f 55%,#b89a5c);
+box-shadow:0 0 50px #e8cd8f88,0 0 120px #c9b8ff44;animation:glow 5s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 70px #e8cd8fbb,0 0 150px #c9b8ff66}}
+.lead{color:var(--mist);font-size:.95rem}
+button{font:inherit;cursor:pointer;color:var(--moon);-webkit-tap-highlight-color:transparent}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.go{margin-top:22px;padding:14px 38px;border-radius:999px;border:1px solid var(--gold);background:#e8cd8f1c;letter-spacing:.2em;font-weight:600}
+.go:hover{background:#e8cd8f36}
+.dots{display:flex;gap:8px;justify-content:center;margin:6px 0 26px}
+.dots i{width:8px;height:8px;border-radius:50%;background:#ffffff26;transition:.4s}
+.dots i.on{background:var(--gold);box-shadow:0 0 10px var(--gold)}
+.opt{display:block;width:100%;text-align:left;margin:12px 0;padding:15px 18px;border-radius:14px;
+border:1px solid #c9b8ff44;background:linear-gradient(135deg,#ffffff0d,#ffffff03);line-height:1.7;transition:.25s}
+.opt:hover{border-color:var(--gold);background:#e8cd8f14;transform:translateY(-1px)}
+.opt.sel{border-color:var(--gold);background:#e8cd8f2a;box-shadow:0 0 18px #e8cd8f44}
+.back{margin-top:14px;background:none;border:0;color:var(--mist);font-size:.85rem;text-decoration:underline}
+.orb{width:130px;height:130px;margin:10px auto 6px;border-radius:50%;display:grid;place-items:center;font-size:3.4rem;color:#fff;
+background:radial-gradient(circle at 35% 30%,var(--c1),var(--c2));box-shadow:0 0 60px var(--c2),0 0 140px var(--c2);animation:rise 1.6s ease-out both}
+@keyframes rise{from{opacity:0;transform:scale(.4);filter:blur(14px)}}
+.card{margin:22px 0;padding:20px 20px 14px;border-radius:16px;border:1px solid #c9b8ff33;background:#ffffff08;text-align:left}
+.card h3{margin:0 0 6px;font-size:1.05rem;color:var(--gold)}
+.card ul{margin:6px 0 8px;padding-left:1.2em}
+.card.ng h3{color:var(--rose)}
+.tag{display:inline-block;margin:3px 4px 3px 0;padding:2px 12px;border-radius:999px;border:1px solid #e8cd8f66;font-size:.85rem}
+.bars{margin:8px 0 0;text-align:left;font-size:.85rem}
+.bar{display:flex;align-items:center;gap:10px;margin:4px 0}
+.bar span:first-child{width:6.5em;flex:none}
+.bar b{display:block;height:6px;border-radius:6px;background:linear-gradient(90deg,var(--mist),var(--gold));transition:width 1.2s .5s}
+.line{margin:26px 0 8px;padding:20px 18px;border-radius:16px;border:1px solid #06c75588;background:linear-gradient(135deg,#06c7551f,#ffffff06);text-align:center}
+.line p{margin:0 0 14px;font-size:.92rem}
+.line a{display:inline-block;padding:14px 30px;border-radius:999px;background:#06c755;color:#fff;font-weight:800;letter-spacing:.08em;text-decoration:none;box-shadow:0 0 22px #06c75566}
+.line a:hover{background:#05b34c}
+.line a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.sub{font-size:.8rem;color:var(--mist);margin-top:26px}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<main>
+  <section id="start">
+    <div class="moon" aria-hidden="true"></div>
+    <h1>才能の種 診断</h1>
+    <p class="lead">うちの子の心の奥に眠る、<br>まだ小さな才能の種をそっとのぞいてみましょう。</p>
+    <p class="lead">8つの問いに、お子さんを思い浮かべて<br>直感で答えてください。</p>
+    <button class="go" id="begin">診断をはじめる</button>
+  </section>
+  <section id="quiz" hidden>
+    <div class="dots" id="dots" aria-hidden="true"></div>
+    <h2 id="q"></h2>
+    <div id="opts"></div>
+    <button class="back" id="back">ひとつ前にもどる</button>
+  </section>
+  <section id="result" hidden></section>
+</main>
+<script>
+const T=[
+{n:"独自性タイプ",sym:"✦",c:["#ffe9a8","#8a6cf0"],cp:"「みんなと同じ」が苦しい子",
+ lead:"自分の世界を持っている子。納得していないことに、心から従えないだけなんです。",
+ seeds:["独創性","深い探究心","自分で考える力","常識を疑う視点"],
+ future:"研究者・クリエイター・起業家・発明家など、まだ世の中にないものを生み出す力に。",
+ how:["「あなたはどう思う？」「どうしたらやれそう？」と問いかける","「この子には、この子の考えがある」と理解する","命令より対話で伸びる子です"],
+ ng:["「みんなできてるよ」","「なんであなただけ？」","「普通はこうするよ」"],ngm:"比較は“自分らしさの否定”として刺さります。必要なのは「違っていい」という安心感。"},
+{n:"感性タイプ",sym:"☾",c:["#ffd0ec","#b46be0"],cp:"「気分屋」に見えて、世界を深く感じている子",
+ lead:"心が動かないものにはエネルギーが向かない。けれど心が動いた瞬間の集中力は驚くほどです。",
+ seeds:["豊かな感受性","発想力","表現力","ひらめき"],
+ future:"アーティスト・デザイナー・表現者・企画職など、感性が価値になる場所で花開きます。",
+ how:["「どうしたら楽しくできそう？」「ゲームみたいにしてみる？」","興味の入口を一緒に探す","管理より“ワクワク”で伸びる子です"],
+ ng:["「そんなことで落ち込まないで」","「気にしすぎ」","「考えすぎだよ」"],ngm:"感情の否定は、感じている世界そのものを否定されるように届きます。必要なのは「感じていい」という安心感。"},
+{n:"愛されたいタイプ",sym:"❀",c:["#ffe3ee","#e07aa8"],cp:"「繊細すぎる」のではなく、人一倍深く感じている子",
+ lead:"見えないものを感じ取る受信感度の高い子。慣れるのに時間がかかるのは、安全かどうか確かめているから。",
+ seeds:["共感力","観察力","思いやり","想像力"],
+ future:"カウンセラー・保育士・看護職・作家など、人の心を扱う場面で大きな力に。",
+ how:["「不安だったね」「ゆっくりで大丈夫」と言葉にする","「あなたのペースでいいよ」と急かさない","プレッシャーより安心で伸びる子です"],
+ ng:["「そんなことで泣くの？」","「大したことないよ」","「気にしすぎ」"],ngm:"気持ちを小さく扱われると「感じる自分はダメ」につながります。感じる力を否定されないことが土台に。"},
+{n:"頑固タイプ",sym:"◆",c:["#cfe6ff","#5d7be0"],cp:"「言うことを聞かない」のではなく、納得しないと動けない子",
+ lead:"意志が強く、理由や筋の通り方を大切にする子。一度納得すれば最後までやり抜く粘り強さがあります。",
+ seeds:["信念の強さ","論理的思考","判断力","粘り強さ"],
+ future:"リーダー・弁護士・職人・専門職など、信念や専門性が求められる場面で大きな力に。",
+ how:["なぜ必要か・なぜ今か・終わったら何が楽になるかを説明する","「あなたはどう考える？」と意見を聞く","支配より理解で伸びる子です"],
+ ng:["「親の言うことを聞きなさい」","「口答えしない」","「いいから従って」"],ngm:"力で押さえるほど心は硬くなります。頑固さは、折れない強さ。味方にできたとき大きく伸びます。"}];
+// 各選択肢は [タイプ番号, 文]
+const Q=[
+["学校や園での様子は、どれがいちばん近い？",[0,"一人でいても平気で、自分のやり方を貫く"],[1,"気分や興味で、様子がころころ変わる"],[2,"新しい場所では、しばらく様子をうかがう"],[3,"納得するまで、決して動かない"]],
+["「やりなさい」と言われたとき、多いのは？",[0,"「なんで？」と理由や別のやり方を口にする"],[1,"楽しそうならすぐ動くが、気が乗らないと動かない"],[2,"顔色をうかがって、不安そうになる"],[3,"「やだ」と言って、動こうとしない"]],
+["夢中になっているときの姿は？",[0,"自分だけのルールや発想で遊んでいる"],[1,"時間を忘れて没頭し、やめさせるのが大変"],[2,"誰かがそばにいると安心して遊べる"],[3,"決めたことは、最後までやり抜く"]],
+["落ち込んだとき、どうなりやすい？",[0,"一人で考え込み、自分の中で消化しようとする"],[1,"急に気分が変わり、切り替わるのも早い"],[2,"ちょっとした言葉で深く傷つき、立ち直りに時間がかかる"],[3,"悔しくて意地になり、なかなか折れない"]],
+["友だちとの関わり方は？",[0,"群れなくても平気で、自分の世界がある"],[1,"好きなことが合う子とは、すぐ仲良くなる"],[2,"人の表情や空気に敏感で、よく気を遣う"],[3,"自分の意見をはっきり言い、簡単には譲らない"]],
+["言われると、いちばんつらそうな言葉は？",[0,"「みんなそうしてるよ」「普通はこうするよ」"],[1,"「考えすぎ」「ちゃんとして」"],[2,"「大したことないよ」「早くして」"],[3,"「いいから従いなさい」"]],
+["得意そうだな、と感じるのは？",[0,"常識にとらわれない発想や、とことん調べること"],[1,"色・音・言葉など、感覚で表現すること"],[2,"人の気持ちに気づいて、寄り添うこと"],[3,"信念を持って、粘り強く取り組むこと"]],
+["新しい環境に入ったとき、近いのは？",[0,"周りに合わせず、自分のペースで過ごす"],[1,"興味を引かれたものに向かって動き出す"],[2,"慣れるまでに時間がかかる"],[3,"納得できるまで、なかなか動かない"]]];
+const $=id=>document.getElementById(id);
+let cur=0,ans=[];
+function show(id){["start","quiz","result"].forEach(s=>$(s).hidden=s!==id);window.scrollTo(0,0)}
+function ask(){
+  const q=Q[cur];$("q").textContent=q[0];
+  $("dots").innerHTML=Q.map((_,i)=>`<i class="${i<=cur?"on":""}"></i>`).join("");
+  let o=q.slice(1);const k=cur%4;o=o.slice(k).concat(o.slice(0,k)); // 並び順を回転
+  $("opts").innerHTML="";
+  o.forEach(([t,txt])=>{const b=document.createElement("button");b.className="opt"+(ans[cur]===t?" sel":"");b.textContent=txt;
+    b.onclick=()=>{ans[cur]=t;b.classList.add("sel");setTimeout(()=>{cur++;cur<Q.length?ask():finish()},260)};$("opts").appendChild(b)});
+  $("back").style.visibility=cur?"visible":"hidden";
+}
+function finish(){
+  const s=[0,0,0,0];ans.forEach(t=>s[t]++);
+  const top=s.indexOf(Math.max(...s)),t=T[top];
+  const li=a=>a.map(x=>`<li>${x}</li>`).join("");
+  $("result").style.cssText=`--c1:${t.c[0]};--c2:${t.c[1]}`;
+  $("result").innerHTML=`<p class="lead">あなたのお子さんの才能の種は…</p>
+  <div class="orb" aria-hidden="true">${t.sym}</div>
+  <h1>${t.n}</h1><h2>${t.cp}</h2><p>${t.lead}</p>
+  <div class="card"><h3>この子が持つ才能の種</h3>${t.seeds.map(x=>`<span class="tag">${x}</span>`).join("")}<p>${t.future}</p></div>
+  <div class="card"><h3>おすすめの関わり方</h3><ul>${li(t.how)}</ul></div>
+  <div class="card ng"><h3>避けたい言葉</h3><ul>${li(t.ng)}</ul><p>${t.ngm}</p></div>
+  <div class="card"><h3>あなたの回答の傾向</h3><div class="bars">${T.map((x,i)=>`<div class="bar"><span>${x.n.replace("タイプ","")}</span><b style="width:0" data-w="${s[i]/Q.length*100}%"></b></div>`).join("")}</div></div>
+  <div class="line"><p>※詳しい結果を知りたい方は、LINEに登録して、あなたのタイプを送ってね</p><a href="https://lin.ee/pGctAyW" target="_blank" rel="noopener noreferrer">LINEに登録してタイプを送る</a></div>
+  <p class="sub">複数のタイプを併せ持つ子も多く、成長とともに変わることもあります。<br>ラベルではなく、関わり方のヒントとして使ってくださいね。</p>
+  <button class="go" id="again">もう一度診断する</button>`;
+  show("result");
+  requestAnimationFrame(()=>setTimeout(()=>document.querySelectorAll(".bar b").forEach(b=>b.style.width=b.dataset.w),60));
+  $("again").onclick=()=>{cur=0;ans=[];show("start")};
+}
+$("begin").onclick=()=>{cur=0;ans=[];show("quiz");ask()};
+$("back").onclick=()=>{if(cur>0){cur--;ask()}};
+// 星空
+const cv=$("stars"),cx=cv.getContext("2d");let S=[];
+function fit(){cv.width=innerWidth;cv.height=innerHeight;S=Array.from({length:70},()=>({x:Math.random()*cv.width,y:Math.random()*cv.height,r:Math.random()*1.4+.3,p:Math.random()*6}))}
+fit();addEventListener("resize",fit);
+const calm=matchMedia("(prefers-reduced-motion:reduce)").matches;
+function draw(t){cx.clearRect(0,0,cv.width,cv.height);
+  S.forEach(s=>{cx.globalAlpha=.35+.5*Math.abs(Math.sin(s.p+t/1800));cx.fillStyle="#f3edff";cx.beginPath();cx.arc(s.x,s.y,s.r,0,7);cx.fill()});
+  if(!calm)requestAnimationFrame(draw)}
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>
